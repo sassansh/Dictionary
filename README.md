@@ -4,7 +4,7 @@
  <a href="https://github.com/sassansh/Dictionary">
     <img src="/images/logo.svg" alt="Logo" width="80" height="80">
   </a>
-  <h2 align="center">Dictionary 📖</h2>
+  <h2 align="center">A Dictionary Client</h2>
 
   <p align="center">
      A GUI for subset of the client side of the DICT protocol, described in RFC 2229. Built as a group programming assignment for UBC CPSC 317 (Internet Computing).
