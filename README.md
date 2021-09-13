@@ -13,13 +13,6 @@
   </p>
 </p>
 
-![GitHub contributors](https://img.shields.io/github/contributors/sassansh/Dictionary?color=ffcc66&style=for-the-badge)
-![GitHub stars](https://img.shields.io/github/stars/sassansh/Dictionary?color=ffcc66&style=for-the-badge)
-[![GitHub forks](https://img.shields.io/github/forks/sassansh/Dictionary?style=for-the-badge)](https://github.com/sassansh/Dictionary/network)
-[![GitHub issues](https://img.shields.io/github/issues/sassansh/Dictionary?color=ffcc66&style=for-the-badge)](https://github.com/sassansh/Dictionary/issues)
-[![GitHub license](https://img.shields.io/github/license/sassansh/Dictionary?style=for-the-badge)](https://github.com/sassansh/Dictionary/blob/master/LICENSE)
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 ![Assignment Question](/images/interface.png)
 
 ## Table of Contents
