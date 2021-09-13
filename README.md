@@ -8,8 +8,6 @@
 
   <p align="center">
      A GUI for subset of the client side of the DICT protocol, described in RFC 2229. Built as a group programming assignment for UBC CPSC 317 (Internet Computing).
-    <br />
-    <br />
   </p>
 </p>
 
