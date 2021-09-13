@@ -94,7 +94,7 @@ You may include, at the top of your `DictionaryConnection.java` file, comments
 
 Sassan Shokoohi - [GitHub](https://github.com/sassansh) - [LinkedIn](https://www.linkedin.com/in/sassanshokoohi/) - [Personal Website](https://sassanshokoohi.ca)
 
-Lana Kashino - [GitHub](https://github.com/lanakashino) - [LinkedIn](https://www.linkedin.com/in/lanakashino/) - [Personal Website](lanakashino.com)
+Lana Kashino - [GitHub](https://github.com/lanakashino) - [LinkedIn](https://www.linkedin.com/in/lanakashino/) - [Personal Website](https://lanakashino.com)
 
 Project Link: [https://github.com/sassansh/Dictionary](https://github.com/sassansh/Dictionary)
 
