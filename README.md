@@ -7,7 +7,7 @@
   <h2 align="center">A Dictionary Client</h2>
 
   <p align="center">
-     A GUI for subset of the client side of the DICT protocol, described in RFC 2229. Built as a group programming assignment for UBC CPSC 317 (Internet Computing).
+     A GUI for subset of the client side of the DICT protocol, described in <a href="https://tools.ietf.org/html/rfc2229">RFC 2229</a>. Built as a group programming assignment for UBC <a href="https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=CPSC&course=317">CPSC 317</a> (Internet Computing).
   </p>
 </p>
 
@@ -15,11 +15,22 @@
 
 ## Table of Contents
 
+- [Goals 🎯](#goals-)
 - [Technology Stack 🛠️](#technology-stack-)
 - [Prerequisites 🍪](#prerequisites-)
 - [Setup 🔧](#setup-)
 - [Assignment Description 📚](#assignment-description-)
 - [Team ‎😃](#team-)
+
+## Goals 🎯
+
+The goals of this assignment are:
+
+- To learn how to make, in Java, a TCP/IP connection and how to exchange data over the connection.
+- To study and understand the implementation of an application level protocol.
+- To learn how to read and implement a well-specified protocol.
+- Improve your programming and debugging skills as they relate to the use of sockets in Java.
+- Develop general networking experimental skills.
 
 ## Technology Stack 🛠️
 
