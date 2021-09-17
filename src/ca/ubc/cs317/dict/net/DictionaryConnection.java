@@ -5,6 +5,7 @@ import ca.ubc.cs317.dict.model.Definition;
 import ca.ubc.cs317.dict.model.MatchingStrategy;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
@@ -15,6 +16,9 @@ import java.util.*;
 public class DictionaryConnection {
 
     private static final int DEFAULT_PORT = 2628;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
 
     /** Establishes a new connection with a DICT server using an explicit host and port number, and handles initial
      * welcome messages.
@@ -25,8 +29,16 @@ public class DictionaryConnection {
      * don't match their expected value.
      */
     public DictionaryConnection(String host, int port) throws DictConnectionException {
-
-        // TODO Add your code here
+        try {
+            socket = new Socket(host, port);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Status status = Status.readStatus(in);
+            if (status.getStatusCode() != 220) throw new DictConnectionException();
+            System.out.println(status.getDetails());
+        } catch(Exception e){
+            throw new DictConnectionException();
+        }
     }
 
     /** Establishes a new connection with a DICT server using an explicit host, with the default DICT port number, and
@@ -45,8 +57,15 @@ public class DictionaryConnection {
      *
      */
     public synchronized void close() {
-
-        // TODO Add your code here
+        out.println("q\n");
+        try {
+            Status status = Status.readStatus(in);
+            if (status.getStatusCode() != 221) throw new DictConnectionException();
+            System.out.println(status.getDetails());
+            in.close();
+            out.close();
+            socket.close();
+        } catch (Exception e) {}
     }
 
     /** Requests and retrieves all definitions for a specific word.
