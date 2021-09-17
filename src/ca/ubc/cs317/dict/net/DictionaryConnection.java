@@ -16,9 +16,9 @@ import java.util.*;
 public class DictionaryConnection {
 
     private static final int DEFAULT_PORT = 2628;
-    private Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private final Socket socket;
+    private final PrintWriter out;
+    private final BufferedReader in;
 
     /** Establishes a new connection with a DICT server using an explicit host and port number, and handles initial
      * welcome messages.
@@ -35,8 +35,9 @@ public class DictionaryConnection {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Status status = Status.readStatus(in);
             if (status.getStatusCode() != 220) throw new DictConnectionException();
-            System.out.println(status.getDetails());
-        } catch(Exception e){
+            System.out.printf("Connected to %s:%d%n", host, port);
+        } catch (Exception e) {
+            System.out.printf("Failed to connect to %s:%d%n", host, port);
             throw new DictConnectionException();
         }
     }
@@ -54,16 +55,11 @@ public class DictionaryConnection {
 
     /** Sends the final QUIT message and closes the connection with the server. This function ignores any exception that
      * may happen while sending the message, receiving its reply, or closing the connection.
-     *
      */
     public synchronized void close() {
-        out.println("q\n");
+        out.println("QUIT\n");
         try {
-            Status status = Status.readStatus(in);
-            if (status.getStatusCode() != 221) throw new DictConnectionException();
-            System.out.println(status.getDetails());
-            in.close();
-            out.close();
+            System.out.println("Connection has been closed!");
             socket.close();
         } catch (Exception e) {}
     }
