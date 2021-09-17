@@ -16,9 +16,9 @@ import java.util.*;
 public class DictionaryConnection {
 
     private static final int DEFAULT_PORT = 2628;
-    private final Socket socket;
-    private final PrintWriter out;
-    private final BufferedReader in;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
 
     /** Establishes a new connection with a DICT server using an explicit host and port number, and handles initial
      * welcome messages.
@@ -61,6 +61,7 @@ public class DictionaryConnection {
         try {
             System.out.println("Connection has been closed!");
             socket.close();
+            socket = null;
         } catch (Exception e) {}
     }
 
