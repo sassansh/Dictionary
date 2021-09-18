@@ -132,16 +132,17 @@ public class DictionaryConnection {
         // Check response code from server
         Status status = Status.readStatus(in);
         System.out.println(status.getDetails());
-        if ((status.getStatusCode() != 110) && (status.getStatusCode() != 554)){
+        if ((status.getStatusCode() != 110) && (status.getStatusCode() != 554)) {
             throw new DictConnectionException();
         }
+        // Status code 554, no databases available
         if (status.getStatusCode() == 554) return databaseMap;
         // Parse databases
         String response;
         try {
             while ((response = in.readLine()) != null && !response.equals(".")) {
                 String[] dbParsed = DictStringParser.splitAtoms(response);
-                Database newDB = new Database( dbParsed[0], dbParsed[1] );
+                Database newDB = new Database(dbParsed[0], dbParsed[1]);
                 databaseMap.put(dbParsed[0], newDB);
             }
         } catch (Exception e) {
@@ -165,16 +166,17 @@ public class DictionaryConnection {
         // Check response code from server
         Status status = Status.readStatus(in);
         System.out.println(status.getDetails());
-        if ((status.getStatusCode() != 111) && (status.getStatusCode() != 555)){
+        if ((status.getStatusCode() != 111) && (status.getStatusCode() != 555)) {
             throw new DictConnectionException();
         }
+        // Status code 555, no strategies available
         if (status.getStatusCode() == 555) return set;
-        // Parse databases
+        // Parse strategies
         String response;
         try {
             while ((response = in.readLine()) != null && !response.equals(".")) {
                 String[] strategyParsed = DictStringParser.splitAtoms(response);
-                MatchingStrategy newStrategy = new MatchingStrategy( strategyParsed[0], strategyParsed[1] );
+                MatchingStrategy newStrategy = new MatchingStrategy(strategyParsed[0], strategyParsed[1]);
                 set.add(newStrategy);
             }
         } catch (Exception e) {
