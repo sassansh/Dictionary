@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b76c48e5-08dc-4bc6-99b8-25828ffdd2f5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="b76c48e5-08dc-4bc6-99b8-25828ffdd2f5" name="Default Changelist" comment="💾 Implement getDatabaseList">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs317/dict/net/DictionaryConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs317/dict/net/DictionaryConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +18,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="1" />
@@ -34,7 +47,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveInnerDialog.RECENTS_KEY">
@@ -69,13 +84,75 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1630554894452</updated>
+      <workItem from="1631521040161" duration="631000" />
+      <workItem from="1631648084189" duration="1251000" />
+      <workItem from="1631738620975" duration="206000" />
+      <workItem from="1631739080649" duration="387000" />
+      <workItem from="1631915094787" duration="6881000" />
+      <workItem from="1631933139723" duration="8732000" />
     </task>
+    <task id="LOCAL-00001" summary="🐛 Minor fixes">
+      <created>1631917317342</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1631917317342</updated>
+    </task>
+    <task id="LOCAL-00002" summary="🐛 Set socket to null after closing">
+      <created>1631921571086</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1631921571086</updated>
+    </task>
+    <task id="LOCAL-00003" summary="🐛 Better connection close">
+      <created>1631933569132</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1631933569132</updated>
+    </task>
+    <task id="LOCAL-00004" summary="💾 Implement getDatabaseList">
+      <created>1631946978806</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1631946978806</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value=" Minor fixes" />
+    <MESSAGE value=" Set socket to null after closing" />
+    <MESSAGE value=" Better connection close" />
+    <MESSAGE value=" Implement getDatabaseList" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Implement getDatabaseList" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ca/ubc/cs317/dict/net/DictionaryConnection.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

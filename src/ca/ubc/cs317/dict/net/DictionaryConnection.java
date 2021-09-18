@@ -62,6 +62,8 @@ public class DictionaryConnection {
      */
     public synchronized void close() {
         try {
+            // Clear all old input
+            clearInputStream();
             // Send QUIT message to server
             out.println("QUIT");
             // Get quit response from server
@@ -123,9 +125,27 @@ public class DictionaryConnection {
      */
     public synchronized Map<String, Database> getDatabaseList() throws DictConnectionException {
         Map<String, Database> databaseMap = new HashMap<>();
-
-        // TODO Add your code here
-
+        // Clear all old input
+        clearInputStream();
+        // Get database list from server
+        out.println("SHOW DATABASES");
+        // Check response code from server
+        Status status = Status.readStatus(in);
+        if (status.getStatusCode() != 110) throw new DictConnectionException();
+        if (status.getStatusCode() == 554) return databaseMap;
+        System.out.println(status.getDetails());
+        // Parse databases
+        String response;
+        try {
+            while ((response = in.readLine()) != null && !response.equals(".")) {
+                String[] dbParsed = DictStringParser.splitAtoms(response);
+                Database newDB = new Database( dbParsed[0], dbParsed[1] );
+                databaseMap.put(dbParsed[0], newDB);
+            }
+        } catch (Exception e) {
+            System.out.printf("Failed to get database list");
+            throw new DictConnectionException();
+        }
         return databaseMap;
     }
 
@@ -140,5 +160,15 @@ public class DictionaryConnection {
         // TODO Add your code here
 
         return set;
+    }
+
+    private void clearInputStream() throws DictConnectionException {
+        // Clear all old input
+        try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (Exception e) {
+            System.out.printf("Failed to clear input stream");
+            throw new DictConnectionException();
+        }
     }
 }
