@@ -62,6 +62,8 @@ public class DictionaryConnection {
      */
     public synchronized void close() {
         try {
+            // Clear all old input
+            clearInputStream();
             // Send QUIT message to server
             out.println("QUIT");
             // Get quit response from server
@@ -123,9 +125,30 @@ public class DictionaryConnection {
      */
     public synchronized Map<String, Database> getDatabaseList() throws DictConnectionException {
         Map<String, Database> databaseMap = new HashMap<>();
-
-        // TODO Add your code here
-
+        // Clear all old input
+        clearInputStream();
+        // Get database list from server
+        out.println("SHOW DATABASES");
+        // Check response code from server
+        Status status = Status.readStatus(in);
+        System.out.println(status.getDetails());
+        if ((status.getStatusCode() != 110) && (status.getStatusCode() != 554)) {
+            throw new DictConnectionException();
+        }
+        // Status code 554, no databases available
+        if (status.getStatusCode() == 554) return databaseMap;
+        // Parse databases
+        String response;
+        try {
+            while ((response = in.readLine()) != null && !response.equals(".")) {
+                String[] dbParsed = DictStringParser.splitAtoms(response);
+                Database newDB = new Database(dbParsed[0], dbParsed[1]);
+                databaseMap.put(dbParsed[0], newDB);
+            }
+        } catch (Exception e) {
+            System.out.printf("Failed to get database list");
+            throw new DictConnectionException();
+        }
         return databaseMap;
     }
 
@@ -136,9 +159,40 @@ public class DictionaryConnection {
      */
     public synchronized Set<MatchingStrategy> getStrategyList() throws DictConnectionException {
         Set<MatchingStrategy> set = new LinkedHashSet<>();
-
-        // TODO Add your code here
-
+        // Clear all old input
+        clearInputStream();
+        // Get strategy list from server
+        out.println("SHOW STRATEGIES");
+        // Check response code from server
+        Status status = Status.readStatus(in);
+        System.out.println(status.getDetails());
+        if ((status.getStatusCode() != 111) && (status.getStatusCode() != 555)) {
+            throw new DictConnectionException();
+        }
+        // Status code 555, no strategies available
+        if (status.getStatusCode() == 555) return set;
+        // Parse strategies
+        String response;
+        try {
+            while ((response = in.readLine()) != null && !response.equals(".")) {
+                String[] strategyParsed = DictStringParser.splitAtoms(response);
+                MatchingStrategy newStrategy = new MatchingStrategy(strategyParsed[0], strategyParsed[1]);
+                set.add(newStrategy);
+            }
+        } catch (Exception e) {
+            System.out.printf("Failed to get strategy list");
+            throw new DictConnectionException();
+        }
         return set;
+    }
+
+    private void clearInputStream() throws DictConnectionException {
+        // Clear all old input
+        try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (Exception e) {
+            System.out.printf("Failed to clear input stream");
+            throw new DictConnectionException();
+        }
     }
 }
