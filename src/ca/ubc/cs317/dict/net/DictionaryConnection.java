@@ -5,6 +5,7 @@ import ca.ubc.cs317.dict.model.Definition;
 import ca.ubc.cs317.dict.model.MatchingStrategy;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
@@ -15,6 +16,9 @@ import java.util.*;
 public class DictionaryConnection {
 
     private static final int DEFAULT_PORT = 2628;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
 
     /** Establishes a new connection with a DICT server using an explicit host and port number, and handles initial
      * welcome messages.
@@ -25,8 +29,21 @@ public class DictionaryConnection {
      * don't match their expected value.
      */
     public DictionaryConnection(String host, int port) throws DictConnectionException {
-
-        // TODO Add your code here
+        try {
+            // Create a new Socket
+            socket = new Socket(host, port);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            // Get welcome message from server
+            Status status = Status.readStatus(in);
+            if (status.getStatusCode() != 220) throw new DictConnectionException();
+            System.out.printf("Connected to %s:%d%n", host, port);
+            // Print server welcome response
+            System.out.println(status.getDetails());
+        } catch (Exception e) {
+            System.out.printf("Failed to connect to %s:%d%n", host, port);
+            throw new DictConnectionException();
+        }
     }
 
     /** Establishes a new connection with a DICT server using an explicit host, with the default DICT port number, and
@@ -42,11 +59,25 @@ public class DictionaryConnection {
 
     /** Sends the final QUIT message and closes the connection with the server. This function ignores any exception that
      * may happen while sending the message, receiving its reply, or closing the connection.
-     *
      */
     public synchronized void close() {
-
-        // TODO Add your code here
+        try {
+            // Send QUIT message to server
+            out.println("QUIT");
+            // Get quit response from server
+            Status status = Status.readStatus(in);
+            System.out.println(status.getDetails());
+            // Close socket
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null) socket.close();
+            in = null;
+            out = null;
+            socket = null;
+            System.out.println("Connection has been closed!");
+        } catch (Exception e) {
+            // Do nothing
+        }
     }
 
     /** Requests and retrieves all definitions for a specific word.
