@@ -158,9 +158,29 @@ public class DictionaryConnection {
      */
     public synchronized Set<MatchingStrategy> getStrategyList() throws DictConnectionException {
         Set<MatchingStrategy> set = new LinkedHashSet<>();
-
-        // TODO Add your code here
-
+        // Clear all old input
+        clearInputStream();
+        // Get strategy list from server
+        out.println("SHOW STRATEGIES");
+        // Check response code from server
+        Status status = Status.readStatus(in);
+        System.out.println(status.getDetails());
+        if ((status.getStatusCode() != 111) && (status.getStatusCode() != 555)){
+            throw new DictConnectionException();
+        }
+        if (status.getStatusCode() == 555) return set;
+        // Parse databases
+        String response;
+        try {
+            while ((response = in.readLine()) != null && !response.equals(".")) {
+                String[] strategyParsed = DictStringParser.splitAtoms(response);
+                MatchingStrategy newStrategy = new MatchingStrategy( strategyParsed[0], strategyParsed[1] );
+                set.add(newStrategy);
+            }
+        } catch (Exception e) {
+            System.out.printf("Failed to get strategy list");
+            throw new DictConnectionException();
+        }
         return set;
     }
 
