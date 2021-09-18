@@ -131,9 +131,11 @@ public class DictionaryConnection {
         out.println("SHOW DATABASES");
         // Check response code from server
         Status status = Status.readStatus(in);
-        if (status.getStatusCode() != 110) throw new DictConnectionException();
-        if (status.getStatusCode() == 554) return databaseMap;
         System.out.println(status.getDetails());
+        if ((status.getStatusCode() != 110) && (status.getStatusCode() != 554)){
+            throw new DictConnectionException();
+        }
+        if (status.getStatusCode() == 554) return databaseMap;
         // Parse databases
         String response;
         try {
