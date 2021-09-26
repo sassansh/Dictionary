@@ -94,8 +94,40 @@ public class DictionaryConnection {
      */
     public synchronized Collection<Definition> getDefinitions(String word, Database database) throws DictConnectionException {
         Collection<Definition> set = new ArrayList<>();
-
-        // TODO Add your code here
+        // Clear all old input
+        clearInputStream();
+        // Get database list from server
+        String dbName = database.getName();
+        out.println("DEFINE "+ dbName + " " + "\"" + word + "\"");
+        // Check response code from server
+        Status status = Status.readStatus(in);
+        System.out.println(status.getDetails());
+        // Status code 550, Invalid Database (return empty list)
+        if (status.getStatusCode() == 550) return set;
+        // Status code 552, No Match (return empty list
+        if (status.getStatusCode() == 552) return set;
+        // Unexpected code, throw error
+        if ((status.getStatusCode() != 150) && (status.getStatusCode() != 552)) {
+            throw new DictConnectionException();
+        }
+        // Parse definitions
+        String response;
+        try {
+            while ((response = in.readLine()) != null && !DictStringParser.splitAtoms(response)[0].equals("250")) {
+                String[] parsedResponse = DictStringParser.splitAtoms(response);
+                Definition newDef;
+                if (parsedResponse[0].equals("151")) {
+                    newDef = new Definition(parsedResponse[1], parsedResponse[2]);
+                    while ((response = in.readLine()) != null && !response.equals(".")) {
+                        newDef.appendDefinition(response);
+                    }
+                    set.add(newDef);
+                }
+            }
+        } catch (Exception e) {
+            System.out.printf("Failed to get database list");
+            throw new DictConnectionException();
+        }
 
         return set;
     }
