@@ -98,7 +98,7 @@ public class DictionaryConnection {
         clearInputStream();
         // Get database list from server
         String dbName = database.getName();
-        out.println("DEFINE "+ dbName + " " + "\"" + word + "\"");
+        out.println("DEFINE " + dbName + " " + "\"" + word + "\"");
         // Check response code from server
         Status status = Status.readStatus(in);
         System.out.println(status.getDetails());
@@ -144,13 +144,12 @@ public class DictionaryConnection {
      */
     public synchronized Set<String> getMatchList(String word, MatchingStrategy strategy, Database database) throws DictConnectionException {
         Set<String> set = new LinkedHashSet<>();
-
         // Clear all old input
         clearInputStream();
         // Get database list from server
         String dbName = database.getName();
         String sName = strategy.getName();
-        out.println("MATCH "+ dbName + " " + sName + " "+ "\"" + word + "\"");
+        out.println("MATCH " + dbName + " " + sName + " " + "\"" + word + "\"");
         // Check response code from server
         Status status = Status.readStatus(in);
         System.out.println(status.getDetails());
@@ -193,11 +192,12 @@ public class DictionaryConnection {
         // Check response code from server
         Status status = Status.readStatus(in);
         System.out.println(status.getDetails());
+        // Status code 554, No databases present (return empty list)
+        if (status.getStatusCode() == 554) return databaseMap;
+        // Unexpected code, throw error
         if ((status.getStatusCode() != 110) && (status.getStatusCode() != 554)) {
             throw new DictConnectionException();
         }
-        // Status code 554, no databases available
-        if (status.getStatusCode() == 554) return databaseMap;
         // Parse databases
         String response;
         try {
@@ -227,11 +227,12 @@ public class DictionaryConnection {
         // Check response code from server
         Status status = Status.readStatus(in);
         System.out.println(status.getDetails());
-        if ((status.getStatusCode() != 111) && (status.getStatusCode() != 555)) {
+        // Status code 555, No strategies available (return empty list)
+        if (status.getStatusCode() == 555) return set;
+        // Unexpected code, throw error
+        if (status.getStatusCode() != 111) {
             throw new DictConnectionException();
         }
-        // Status code 555, no strategies available
-        if (status.getStatusCode() == 555) return set;
         // Parse strategies
         String response;
         try {
