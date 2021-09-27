@@ -107,7 +107,7 @@ public class DictionaryConnection {
         // Status code 552, No Match (return empty list
         if (status.getStatusCode() == 552) return set;
         // Unexpected code, throw error
-        if ((status.getStatusCode() != 150) && (status.getStatusCode() != 552)) {
+        if (status.getStatusCode() != 150) {
             throw new DictConnectionException();
         }
         // Parse definitions
@@ -125,7 +125,7 @@ public class DictionaryConnection {
                 }
             }
         } catch (Exception e) {
-            System.out.printf("Failed to get database list");
+            System.out.printf("Failed to get Definition list");
             throw new DictConnectionException();
         }
 
@@ -145,7 +145,36 @@ public class DictionaryConnection {
     public synchronized Set<String> getMatchList(String word, MatchingStrategy strategy, Database database) throws DictConnectionException {
         Set<String> set = new LinkedHashSet<>();
 
-        // TODO Add your code here
+        // Clear all old input
+        clearInputStream();
+        // Get database list from server
+        String dbName = database.getName();
+        String sName = strategy.getName();
+        out.println("MATCH "+ dbName + " " + sName + " "+ "\"" + word + "\"");
+        // Check response code from server
+        Status status = Status.readStatus(in);
+        System.out.println(status.getDetails());
+        // Status code 550, Invalid Database (return empty list)
+        if (status.getStatusCode() == 550) return set;
+        // Status code 551, Invalid Strategy (return empty list)
+        if (status.getStatusCode() == 551) return set;
+        // Status code 552, No Match (return empty list)
+        if (status.getStatusCode() == 552) return set;
+        // Unexpected code, throw error
+        if ((status.getStatusCode() != 152)) {
+            throw new DictConnectionException();
+        }
+        // Parse response
+        String response;
+        try {
+            while ((response = in.readLine()) != null && !DictStringParser.splitAtoms(response)[0].equals("250") && !response.equals(".")) {
+                String[] parsedResponse = DictStringParser.splitAtoms(response);
+                set.add(parsedResponse[1]);
+            }
+        } catch (Exception e) {
+            System.out.printf("Failed to get Match list");
+            throw new DictConnectionException();
+        }
 
         return set;
     }
