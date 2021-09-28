@@ -7,7 +7,7 @@
   <h2 align="center">A Dictionary Client</h2>
 
   <p align="center">
-     A GUI for subset of the client side of the DICT protocol, described in <a href="https://tools.ietf.org/html/rfc2229">RFC 2229</a>. Built as a group programming assignment for UBC <a href="https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=CPSC&course=317">CPSC 317</a> (Internet Computing).
+     A GUI Client for the DICT protocol, described in <a href="https://tools.ietf.org/html/rfc2229">RFC 2229</a>. Built as a group programming assignment for UBC <a href="https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=CPSC&course=317">CPSC 317</a> (Internet Computing).
   </p>
 </p>
 
