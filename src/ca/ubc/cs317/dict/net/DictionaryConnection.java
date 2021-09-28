@@ -195,7 +195,7 @@ public class DictionaryConnection {
         // Status code 554, No databases present (return empty list)
         if (status.getStatusCode() == 554) return databaseMap;
         // Unexpected code, throw error
-        if ((status.getStatusCode() != 110) && (status.getStatusCode() != 554)) {
+        if (status.getStatusCode() != 110) {
             throw new DictConnectionException();
         }
         // Parse databases
